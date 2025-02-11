@@ -6,7 +6,7 @@
 
 int main() {
     auto window = sf::RenderWindow(sf::VideoMode({800u, 600u}), "CMake SFML Project");
-    window.setFramerateLimit(144);
+    window.setFramerateLimit(60);
     LetterP letterP({50, 50});
     LetterB letterB({150, 50});
     LetterK letterK({250, 50});
@@ -15,6 +15,8 @@ int main() {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
+            } else if (const auto* resized = event->getIf<sf::Event::Resized>()) {
+                window.setView(sf::View(sf::FloatRect({0, 0}, sf::Vector2<float>(resized->size))));
             }
         }
 
