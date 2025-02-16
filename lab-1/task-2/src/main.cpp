@@ -1,8 +1,12 @@
 #include <SFML/Graphics.hpp>
 
+#include "graphics/House.h"
+
 int main() {
     auto window = sf::RenderWindow(sf::VideoMode({800u, 600u}), "CMake SFML Project");
     window.setFramerateLimit(60);
+
+    House house({0, 0});
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
@@ -14,7 +18,10 @@ int main() {
             }
         }
 
-        window.clear(sf::Color::White);
+        window.clear(sf::Color::Black);
+
+        house.draw(window);
+
         window.display();
     }
 }

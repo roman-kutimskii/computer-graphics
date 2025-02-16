@@ -26,5 +26,9 @@ add_executable(
         src/graphics/Wall.h
         src/graphics/SmallWindow.h
         src/graphics/BigWindow.h
+        src/graphics/Roof.h
+        src/graphics/Flue.h
+        src/graphics/Slope.h
+        src/graphics/House.h
 )
 target_link_libraries(main PRIVATE SFML::Graphics)
