@@ -13,7 +13,6 @@ int main() {
     LetterK letterK(sf::Vector2f(300, 150), sf::Color::Blue);
 
     while (window.isOpen()) {
-
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
