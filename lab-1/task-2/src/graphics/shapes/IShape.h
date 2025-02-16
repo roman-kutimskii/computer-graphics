@@ -10,6 +10,8 @@ public:
     virtual void draw(sf::RenderWindow &window) const = 0;
 
     virtual void move(const sf::Vector2f &delta) const = 0;
+
+    [[nodiscard]] virtual sf::FloatRect getBounds() const = 0;
 };
 
 #endif //ISHAPE_H

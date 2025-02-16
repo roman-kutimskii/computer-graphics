@@ -19,6 +19,10 @@ public:
         m_circle->move(delta);
     }
 
+    [[nodiscard]] sf::FloatRect getBounds() const override {
+        return m_circle->getGlobalBounds();
+    }
+
 private:
     std::unique_ptr<sf::CircleShape> m_circle;
 };

@@ -3,7 +3,7 @@
 
 #include "IShape.h"
 
-class TriangleShape : public IShape {
+class TriangleShape final : public IShape {
 public:
     TriangleShape(const sf::Vector2f &point1, const sf::Vector2f &point2, const sf::Vector2f &point3,
                   const sf::Color &color) {
@@ -20,6 +20,10 @@ public:
 
     void move(const sf::Vector2f &delta) const override {
         m_triangle->move(delta);
+    }
+
+    [[nodiscard]] sf::FloatRect getBounds() const override {
+        return m_triangle->getLocalBounds();
     }
 
 private:

@@ -27,6 +27,27 @@ public:
         }
     }
 
+    [[nodiscard]] sf::FloatRect getBounds() const override {
+        if (m_shapes.empty()) {
+            return {};
+        }
+
+        auto bounds = m_shapes[0]->getBounds();
+
+        for (size_t i = 1; i < m_shapes.size(); ++i) {
+            const auto &shapeBounds = m_shapes[i]->getBounds();
+            float left = std::min(bounds.position.x, shapeBounds.position.x);
+            float top = std::min(bounds.position.y, shapeBounds.position.y);
+            float width = std::max(bounds.position.x + bounds.size.x, shapeBounds.position.x + shapeBounds.size.x) -
+                          left;
+            float height = std::max(bounds.position.y + bounds.size.y, shapeBounds.position.y + shapeBounds.size.y) -
+                           top;
+            bounds = sf::FloatRect({left, top}, {width, height});
+        }
+
+        return bounds;
+    }
+
 private:
     std::vector<std::unique_ptr<IShape> > m_shapes;
 };

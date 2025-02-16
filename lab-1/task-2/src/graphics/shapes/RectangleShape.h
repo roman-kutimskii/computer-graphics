@@ -23,6 +23,10 @@ public:
         m_rect->rotate(sf::degrees(degrees));
     }
 
+    [[nodiscard]] sf::FloatRect getBounds() const override {
+        return m_rect->getGlobalBounds();
+    }
+
 private:
     std::unique_ptr<sf::RectangleShape> m_rect;
 };
