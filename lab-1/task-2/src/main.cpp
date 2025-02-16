@@ -7,7 +7,7 @@ int main() {
     auto window = sf::RenderWindow(sf::VideoMode({800u, 600u}), "CMake SFML Project");
     window.setFramerateLimit(60);
 
-    Image image(sf::Vector2f(0, 0));
+    Image image(sf::Vector2f(100, 100));
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {

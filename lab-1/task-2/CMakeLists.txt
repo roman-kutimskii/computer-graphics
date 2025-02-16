@@ -33,5 +33,8 @@ add_executable(
         src/graphics/fence/Board.h
         src/graphics/fence/Fence.h
         src/graphics/Image.h
+        src/graphics/background/Background.h
+        src/graphics/background/Tree.h
+        src/graphics/background/Cloud.h
 )
 target_link_libraries(main PRIVATE SFML::Graphics)
