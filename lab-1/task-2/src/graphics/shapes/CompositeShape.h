@@ -48,6 +48,29 @@ public:
         return bounds;
     }
 
+    void ensureInsideWindow(const sf::RenderWindow &window) const override {
+        const auto bounds = getBounds();
+        const auto windowSize = sf::Vector2f(window.getSize());
+
+        sf::Vector2f offset(0, 0);
+
+        if (bounds.position.x < 0) {
+            offset.x = -bounds.position.x;
+        } else if (bounds.position.x + bounds.size.x > windowSize.x) {
+            offset.x = windowSize.x - (bounds.position.x + bounds.size.x);
+        }
+
+        if (bounds.position.y < 0) {
+            offset.y = -bounds.position.y;
+        } else if (bounds.position.y + bounds.size.y > windowSize.y) {
+            offset.y = windowSize.y - (bounds.position.y + bounds.size.y);
+        }
+
+        if (offset.x != 0 || offset.y != 0) {
+            move(offset);
+        }
+    }
+
 private:
     std::vector<std::unique_ptr<IShape> > m_shapes;
 };
