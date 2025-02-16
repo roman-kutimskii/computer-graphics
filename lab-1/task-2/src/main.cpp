@@ -1,12 +1,13 @@
 #include <SFML/Graphics.hpp>
 
-#include "graphics/house/House.h"
+#include "graphics/Image.h"
+
 
 int main() {
     auto window = sf::RenderWindow(sf::VideoMode({800u, 600u}), "CMake SFML Project");
     window.setFramerateLimit(60);
 
-    House house({0, 0});
+    Image image(sf::Vector2f(0, 0));
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
@@ -20,7 +21,7 @@ int main() {
 
         window.clear(sf::Color::Black);
 
-        house.draw(window);
+        image.draw(window);
 
         window.display();
     }

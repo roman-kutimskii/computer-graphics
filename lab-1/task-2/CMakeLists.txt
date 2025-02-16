@@ -30,5 +30,8 @@ add_executable(
         src/graphics/house/Flue.h
         src/graphics/house/Slope.h
         src/graphics/house/House.h
+        src/graphics/fence/Board.h
+        src/graphics/fence/Fence.h
+        src/graphics/Image.h
 )
 target_link_libraries(main PRIVATE SFML::Graphics)
