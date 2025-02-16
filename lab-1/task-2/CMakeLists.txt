@@ -3,4 +3,16 @@ project(task_2)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(task_2 main.cpp)
+include(FetchContent)
+FetchContent_Declare(
+        SFML
+        GIT_REPOSITORY git@github.com:SFML/SFML.git
+        GIT_TAG 3.0.0
+        GIT_SHALLOW ON
+        EXCLUDE_FROM_ALL
+        SYSTEM
+)
+FetchContent_MakeAvailable(SFML)
+
+add_executable(main src/main.cpp)
+target_link_libraries(main PRIVATE SFML::Graphics)
