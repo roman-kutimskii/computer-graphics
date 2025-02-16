@@ -14,10 +14,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp
-        src/ILetter.h
-        src/LetterP.h
-        src/LetterB.h
-        src/LetterK.h
+add_executable(
+        main
+        src/main.cpp
+        src/graphics/Letter.h
+        src/graphics/LetterB.h
+        src/graphics/LetterK.h
+        src/graphics/LetterP.h
 )
 target_link_libraries(main PRIVATE SFML::Graphics)
