@@ -1,8 +1,8 @@
 #ifndef FLUE_H
 #define FLUE_H
 
-#include "CompositeShape.h"
-#include "RectangleShape.h"
+#include "../shapes/CompositeShape.h"
+#include "../shapes/RectangleShape.h"
 
 class Flue final : public CompositeShape {
 public:

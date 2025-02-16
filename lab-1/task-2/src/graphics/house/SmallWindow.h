@@ -1,8 +1,8 @@
 #ifndef SMALLWINDOW_H
 #define SMALLWINDOW_H
 
-#include "CircleShape.h"
-#include "CompositeShape.h"
+#include "../shapes/CircleShape.h"
+#include "../shapes/CompositeShape.h"
 
 class SmallWindow final : public CompositeShape {
 public:

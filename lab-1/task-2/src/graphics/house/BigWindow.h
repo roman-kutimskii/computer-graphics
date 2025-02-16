@@ -1,8 +1,8 @@
 #ifndef BIGWINDOW_H
 #define BIGWINDOW_H
 
-#include "CompositeShape.h"
-#include "RectangleShape.h"
+#include "../shapes/CompositeShape.h"
+#include "../shapes/RectangleShape.h"
 
 class BigWindow final : public CompositeShape {
 public:

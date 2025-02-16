@@ -1,7 +1,7 @@
 #ifndef HOUSE_H
 #define HOUSE_H
 
-#include "CompositeShape.h"
+#include "../shapes/CompositeShape.h"
 #include "Roof.h"
 #include "Wall.h"
 

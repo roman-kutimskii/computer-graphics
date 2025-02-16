@@ -1,9 +1,9 @@
 #ifndef DOOR_H
 #define DOOR_H
 
-#include "CircleShape.h"
-#include "CompositeShape.h"
-#include "RectangleShape.h"
+#include "../shapes/CircleShape.h"
+#include "../shapes/CompositeShape.h"
+#include "../shapes/RectangleShape.h"
 
 class Door final : public CompositeShape {
 public:

@@ -2,9 +2,9 @@
 #define WALL_H
 
 #include "BigWindow.h"
-#include "CompositeShape.h"
+#include "../shapes/CompositeShape.h"
 #include "Door.h"
-#include "RectangleShape.h"
+#include "../shapes/RectangleShape.h"
 
 class Wall final : public CompositeShape {
 public:

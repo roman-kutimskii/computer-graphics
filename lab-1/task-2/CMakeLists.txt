@@ -17,18 +17,18 @@ FetchContent_MakeAvailable(SFML)
 add_executable(
         main
         src/main.cpp
-        src/graphics/CircleShape.h
-        src/graphics/CompositeShape.h
-        src/graphics/Door.h
-        src/graphics/IShape.h
-        src/graphics/RectangleShape.h
-        src/graphics/TriangleShape.h
-        src/graphics/Wall.h
-        src/graphics/SmallWindow.h
-        src/graphics/BigWindow.h
-        src/graphics/Roof.h
-        src/graphics/Flue.h
-        src/graphics/Slope.h
-        src/graphics/House.h
+        src/graphics/shapes/CircleShape.h
+        src/graphics/shapes/CompositeShape.h
+        src/graphics/house/Door.h
+        src/graphics/shapes/IShape.h
+        src/graphics/shapes/RectangleShape.h
+        src/graphics/shapes/TriangleShape.h
+        src/graphics/house/Wall.h
+        src/graphics/house/SmallWindow.h
+        src/graphics/house/BigWindow.h
+        src/graphics/house/Roof.h
+        src/graphics/house/Flue.h
+        src/graphics/house/Slope.h
+        src/graphics/house/House.h
 )
 target_link_libraries(main PRIVATE SFML::Graphics)

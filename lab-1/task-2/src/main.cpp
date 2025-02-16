@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 
-#include "graphics/House.h"
+#include "graphics/house/House.h"
 
 int main() {
     auto window = sf::RenderWindow(sf::VideoMode({800u, 600u}), "CMake SFML Project");

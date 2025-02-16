@@ -1,8 +1,8 @@
 #ifndef SLOPE_H
 #define SLOPE_H
 
-#include "CompositeShape.h"
-#include "RectangleShape.h"
+#include "../shapes/CompositeShape.h"
+#include "../shapes/RectangleShape.h"
 
 class Slope final : public CompositeShape {
 public:

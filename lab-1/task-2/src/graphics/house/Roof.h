@@ -1,11 +1,11 @@
 #ifndef ROOF_H
 #define ROOF_H
 
-#include "CompositeShape.h"
+#include "../shapes/CompositeShape.h"
 #include "Flue.h"
 #include "Slope.h"
 #include "SmallWindow.h"
-#include "TriangleShape.h"
+#include "../shapes/TriangleShape.h"
 
 class Roof final : public CompositeShape {
 public:
