@@ -14,5 +14,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp)
+add_executable(
+        main
+        src/main.cpp
+        src/graphics/CircleShape.h
+        src/graphics/CompositeShape.h
+        src/graphics/Door.h
+        src/graphics/IShape.h
+        src/graphics/RectangleShape.h
+        src/graphics/TriangleShape.h
+)
 target_link_libraries(main PRIVATE SFML::Graphics)

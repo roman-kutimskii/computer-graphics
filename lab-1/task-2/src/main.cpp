@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 int main() {
-    auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project");
+    auto window = sf::RenderWindow(sf::VideoMode({800u, 600u}), "CMake SFML Project");
     window.setFramerateLimit(60);
 
     while (window.isOpen()) {
@@ -14,7 +14,7 @@ int main() {
             }
         }
 
-        window.clear();
+        window.clear(sf::Color::White);
         window.display();
     }
 }
