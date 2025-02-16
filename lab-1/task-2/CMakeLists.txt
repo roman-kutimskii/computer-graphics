@@ -23,5 +23,8 @@ add_executable(
         src/graphics/IShape.h
         src/graphics/RectangleShape.h
         src/graphics/TriangleShape.h
+        src/graphics/Wall.h
+        src/graphics/SmallWindow.h
+        src/graphics/BigWindow.h
 )
 target_link_libraries(main PRIVATE SFML::Graphics)
