@@ -66,6 +66,8 @@ int main() {
     vbo.unbind();
     ebo.unbind();
 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
 
