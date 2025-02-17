@@ -1,79 +1,77 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad/gl.h>
-#include <GLFW/glfw3.h>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <glad/gl.h>
 
 class Shader {
 public:
-    GLuint ID;
+    Shader(const std::string &vertexPath, const std::string &fragmentPath) {
+        const auto vertexSource = readFile(vertexPath);
+        const auto fragmentSource = readFile(fragmentPath);
 
-    Shader(const std::string &vertexFile, const std::string &fragmentFile) {
-        const std::string vertexCode = getFileContents(vertexFile);
-        const std::string fragmentCode = getFileContents(fragmentFile);
-
-        const GLuint vertexShader = compileShader(vertexCode, GL_VERTEX_SHADER);
-        const GLuint fragmentShader = compileShader(fragmentCode, GL_FRAGMENT_SHADER);
-
-        ID = glCreateProgram();
-        glAttachShader(ID, vertexShader);
-        glAttachShader(ID, fragmentShader);
-        glLinkProgram(ID);
-        checkCompileErrors(ID, "PROGRAM");
-
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
+        shaderProgram = createShaderProgram(vertexSource, fragmentSource);
     }
 
-    void activate() const {
-        glUseProgram(ID);
+    ~Shader() {
+        glDeleteProgram(shaderProgram);
     }
 
-    void remove() const {
-        glDeleteProgram(ID);
+    void use() const {
+        glUseProgram(shaderProgram);
     }
 
 private:
-    [[nodiscard]] static std::string getFileContents(const std::string &filename) {
-        std::ifstream in(filename);
-        if (!in.is_open()) {
-            throw std::runtime_error("Failed to open shader file: " + filename);
-        }
+    GLuint shaderProgram;
 
-        std::ostringstream buffer;
-        buffer << in.rdbuf();
+    std::string readFile(const std::string &filePath) {
+        const std::ifstream file(filePath);
+        std::stringstream buffer;
+        buffer << file.rdbuf();
         return buffer.str();
     }
 
-    [[nodiscard]] static GLuint compileShader(const std::string &source, GLenum type) {
-        const GLuint shader = glCreateShader(type);
-        const char *sourceCStr = source.c_str();
-        glShaderSource(shader, 1, &sourceCStr, nullptr);
+    GLuint compileShader(const std::string &source, GLenum shaderType) {
+        const GLuint shader = glCreateShader(shaderType);
+        const char *shaderSource = source.c_str();
+        glShaderSource(shader, 1, &shaderSource, nullptr);
         glCompileShader(shader);
-        checkCompileErrors(shader, type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT");
+
+        GLint success;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        if (!success) {
+            char infoLog[512];
+            glGetShaderInfoLog(shader, 512, nullptr, infoLog);
+            std::cerr << "Shader compilation failed: " << infoLog << std::endl;
+        }
+
         return shader;
     }
 
-    static void checkCompileErrors(const GLuint shader, const std::string &type) {
+    GLuint createShaderProgram(const std::string &vertexSource, const std::string &fragmentSource) {
+        const GLuint vertexShader = compileShader(vertexSource, GL_VERTEX_SHADER);
+        const GLuint fragmentShader = compileShader(fragmentSource, GL_FRAGMENT_SHADER);
+
+        const GLuint program = glCreateProgram();
+        glAttachShader(program, vertexShader);
+        glAttachShader(program, fragmentShader);
+        glLinkProgram(program);
+
         GLint success;
-        GLchar infoLog[1024];
-        if (type != "PROGRAM") {
-            glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-            if (!success) {
-                glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
-                std::cerr << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n";
-            }
-        } else {
-            glGetProgramiv(shader, GL_LINK_STATUS, &success);
-            if (!success) {
-                glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
-                std::cerr << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n";
-            }
+        glGetProgramiv(program, GL_LINK_STATUS, &success);
+        if (!success) {
+            char infoLog[512];
+            glGetProgramInfoLog(program, 512, nullptr, infoLog);
+            std::cerr << "Shader program linking failed: " << infoLog << std::endl;
         }
+
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+
+        return program;
     }
 };
 
