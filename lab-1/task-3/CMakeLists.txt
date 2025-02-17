@@ -16,7 +16,6 @@ set(GLAD_SOURCE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/glad)
 add_library(glad STATIC ${GLAD_SOURCE_DIR}/src/gl.c)
 target_include_directories(glad PUBLIC ${GLAD_SOURCE_DIR}/include)
 
-add_executable(main src/main.cpp
-        src/Shader.h)
+add_executable(main src/main.cpp)
 target_link_libraries(main glfw glad)
 target_include_directories(main PRIVATE ${GLAD_SOURCE_DIR}/include ${glm_SOURCE_DIR})

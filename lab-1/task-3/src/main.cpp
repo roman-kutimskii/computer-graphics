@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Buffer.h"
 #include "Shader.h"
 
 void framebuffer_size_callback(GLFWwindow *window, const int width, const int height) {
@@ -42,46 +43,28 @@ int main() {
     glViewport(0, 0, 800, 600);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+    GLfloat vertices[] = {
+        -0.5f, 0.5f, 0.0f, 0.0f, 128 / 255.0f, 255 / 255.0f,
+        0.5f, 0.5f, 0.0f, 255 / 255.0f, 0 / 255.0f, 0 / 255.0f,
+        0.5f, -0.5f, 0.0f, 0 / 255.0f, 153 / 255.0f, 0 / 255.0f,
+        -0.5f, -0.5f, 0.0f, 255 / 255.0f, 255 / 255.0f, 51 / 255.0f
+    };
+
+    GLuint indexes[] = {
+        0, 1, 2, 3
+    };
+
     const Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
 
-    // Вершины треугольника
-    float vertices[] = {
-        // Позиции          // Цвета
-        0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // Верхняя вершина (красный)
-       -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // Левая вершина (зеленый)
-        0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // Правая вершина (синий)
-    };
-
-    unsigned int indices[] = {
-        0, 1, 2  // Индексы для треугольника
-    };
-
-    // Создание VAO, VBO и EBO
-    unsigned int VAO, VBO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    // Привязка VAO
-    glBindVertexArray(VAO);
-
-    // Привязка VBO и загрузка данных
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // Привязка EBO и загрузка данных
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // Настройка указателей на вершины
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);  // Вершины
-
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);  // Цвета
-
-    // Развязываем VAO
-    glBindVertexArray(0);
+    VAO vao;
+    vao.bind();
+    VBO vbo(vertices, sizeof(vertices));
+    const EBO ebo(indexes, sizeof(indexes));
+    vao.linkAttrib(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void *) nullptr);
+    vao.linkAttrib(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
+    vao.unbind();
+    vbo.unbind();
+    ebo.unbind();
 
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
@@ -90,17 +73,17 @@ int main() {
 
         shader.use();
 
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+        vao.bind();
+
+        glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, nullptr);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    // Очистка и завершение
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    vao.remove();
+    vbo.remove();
+    ebo.remove();
 
     glfwTerminate();
     return 0;
