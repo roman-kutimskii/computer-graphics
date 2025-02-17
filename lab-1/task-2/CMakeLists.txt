@@ -14,27 +14,5 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
-add_executable(
-        main
-        src/main.cpp
-        src/graphics/shapes/CircleShape.h
-        src/graphics/shapes/CompositeShape.h
-        src/graphics/house/Door.h
-        src/graphics/shapes/IShape.h
-        src/graphics/shapes/RectangleShape.h
-        src/graphics/shapes/TriangleShape.h
-        src/graphics/house/Wall.h
-        src/graphics/house/SmallWindow.h
-        src/graphics/house/BigWindow.h
-        src/graphics/house/Roof.h
-        src/graphics/house/Flue.h
-        src/graphics/house/Slope.h
-        src/graphics/house/House.h
-        src/graphics/fence/Board.h
-        src/graphics/fence/Fence.h
-        src/graphics/Image.h
-        src/graphics/background/Background.h
-        src/graphics/background/Tree.h
-        src/graphics/background/Cloud.h
-)
+add_executable(main src/main.cpp)
 target_link_libraries(main PRIVATE SFML::Graphics)
