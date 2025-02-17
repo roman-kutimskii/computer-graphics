@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Shader.h"
+
 void framebuffer_size_callback(GLFWwindow *window, const int width, const int height) {
     glViewport(0, 0, width, height);
 }
@@ -40,13 +42,17 @@ int main() {
     glViewport(0, 0, 800, 600);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+    const Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
+
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
         glClear(GL_COLOR_BUFFER_BIT);
+        shader.activate();
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
+    shader.remove();
     glfwTerminate();
     return 0;
 }
