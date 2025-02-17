@@ -1,8 +1,8 @@
-#include <iostream>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
-void framebufferSizeCallback(GLFWwindow *window, const int width, const int height) {
+void framebuffer_size_callback(GLFWwindow *window, const int width, const int height) {
     glViewport(0, 0, width, height);
 }
 
@@ -22,7 +22,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow *window = glfwCreateWindow(800, 600, "Simple Window", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(800, 600, "OpenGL Window", nullptr, nullptr);
     if (window == nullptr) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -37,11 +37,11 @@ int main() {
         return -1;
     }
 
-    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+    glViewport(0, 0, 800, 600);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
-        glClearColor(1.f, 1.f, 1.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(window);
         glfwPollEvents();
