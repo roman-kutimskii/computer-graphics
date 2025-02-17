@@ -23,7 +23,7 @@ public:
     }
 
     [[nodiscard]] sf::FloatRect getBounds() const override {
-        return m_triangle->getLocalBounds();
+        return m_triangle->getGlobalBounds();
     }
 
     void ensureInsideWindow(const sf::RenderWindow &window) const override {

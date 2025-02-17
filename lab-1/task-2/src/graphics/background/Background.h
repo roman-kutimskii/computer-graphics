@@ -21,7 +21,7 @@ public:
                 sf::Vector2f(440, 55),
                 sf::Color(57, 196, 120))
         );
-        add(std::make_unique<Tree>(position + sf::Vector2f(300, 150)));
+        add(std::make_unique<Tree>(position + sf::Vector2f(300, 155)));
         add(std::make_unique<Cloud>(position + sf::Vector2f(250, 50)));
     }
 };
