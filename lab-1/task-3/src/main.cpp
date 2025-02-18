@@ -37,10 +37,10 @@ int main() {
     }
 
     GLfloat vertices[] = {
-        -0.5f, 0.5f, 0.0f, 0.0f, 128 / 255.0f, 255 / 255.0f,
-        0.5f, 0.5f, 0.0f, 255 / 255.0f, 0 / 255.0f, 0 / 255.0f,
-        0.5f, -0.5f, 0.0f, 0 / 255.0f, 153 / 255.0f, 0 / 255.0f,
-        -0.5f, -0.5f, 0.0f, 255 / 255.0f, 255 / 255.0f, 51 / 255.0f
+        -0.5f, 0.5f, 0.0f, 128 / 255.0f, 255 / 255.0f,
+        0.5f, 0.5f, 255 / 255.0f, 0 / 255.0f, 0 / 255.0f,
+        0.5f, -0.5f, 0 / 255.0f, 153 / 255.0f, 0 / 255.0f,
+        -0.5f, -0.5f, 255 / 255.0f, 255 / 255.0f, 51 / 255.0f
     };
 
     GLuint indexes[] = {
@@ -53,8 +53,8 @@ int main() {
     vao.bind();
     VBO vbo(vertices, sizeof(vertices));
     const EBO ebo(indexes, sizeof(indexes));
-    vao.linkAttrib(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void *) nullptr);
-    vao.linkAttrib(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
+    vao.linkAttrib(vbo, 0, 2, GL_FLOAT, 5 * sizeof(float), (void *) nullptr);
+    vao.linkAttrib(vbo, 1, 3, GL_FLOAT, 5 * sizeof(float), reinterpret_cast<void *>(2 * sizeof(float)));
     vao.unbind();
     vbo.unbind();
     ebo.unbind();
