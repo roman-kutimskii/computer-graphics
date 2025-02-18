@@ -5,10 +5,6 @@
 #include "Buffer.h"
 #include "Shader.h"
 
-void framebuffer_size_callback(GLFWwindow *window, const int width, const int height) {
-    glViewport(0, 0, width, height);
-}
-
 void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
@@ -40,9 +36,6 @@ int main() {
         return -1;
     }
 
-    glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
     GLfloat vertices[] = {
         -0.5f, 0.5f, 0.0f, 0.0f, 128 / 255.0f, 255 / 255.0f,
         0.5f, 0.5f, 0.0f, 255 / 255.0f, 0 / 255.0f, 0 / 255.0f,
@@ -54,7 +47,7 @@ int main() {
         0, 1, 2, 3
     };
 
-    const Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
+    const Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
 
     VAO vao;
     vao.bind();
@@ -66,7 +59,7 @@ int main() {
     vbo.unbind();
     ebo.unbind();
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
