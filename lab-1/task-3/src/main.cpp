@@ -21,7 +21,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow *window = glfwCreateWindow(800, 600, "OpenGL Window", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(600, 600, "OpenGL Window", nullptr, nullptr);
     if (window == nullptr) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -37,14 +37,15 @@ int main() {
     }
 
     GLfloat vertices[] = {
-        -0.5f, 0.5f, 0.0f, 128 / 255.0f, 255 / 255.0f,
-        0.5f, 0.5f, 255 / 255.0f, 0 / 255.0f, 0 / 255.0f,
-        0.5f, -0.5f, 0 / 255.0f, 153 / 255.0f, 0 / 255.0f,
-        -0.5f, -0.5f, 255 / 255.0f, 255 / 255.0f, 51 / 255.0f
+        0.0f, 0.0f, 0.0f, 0.5f, 1.0f,
+        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.5f, 1.0f,
+        0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
+        0.5f, -0.5f, 0.0f, 0.5f, 0.0f,
     };
 
     GLuint indexes[] = {
-        0, 1, 2, 3
+        1, 2, 4, 3
     };
 
     const Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
@@ -70,7 +71,7 @@ int main() {
 
         vao.bind();
 
-        glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLE_FAN, sizeof indexes / 4, GL_UNSIGNED_INT, nullptr);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
