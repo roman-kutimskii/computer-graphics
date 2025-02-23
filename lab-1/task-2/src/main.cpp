@@ -4,6 +4,7 @@
 
 
 int main() {
+    // TODO: сделать так, чтобы dnd не отрывался
     auto window = sf::RenderWindow(sf::VideoMode({800u, 600u}), "CMake SFML Project");
     window.setFramerateLimit(60);
 

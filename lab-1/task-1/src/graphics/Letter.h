@@ -16,6 +16,7 @@ public:
     }
 
     void update(const sf::RenderWindow &window) {
+        // TODO: Учитывать время с предыдущего кадра
         m_velocityY = m_velocityY + m_accelerationY;
         for (const auto &shape: m_shapes) {
             shape->move(sf::Vector2f(0, m_velocityY));
