@@ -10,10 +10,11 @@
 #include <QMouseEvent>
 #include <QPen>
 #include <QMessageBox>
+#include <QColorDialog>
 
 class ImageEditor final : public QLabel {
 public:
-    explicit ImageEditor(QWidget *parent = nullptr) : QLabel(parent) {
+    explicit ImageEditor(QWidget *parent = nullptr) : QLabel(parent), m_currentColor(Qt::black) {
         setAlignment(Qt::AlignCenter);
         setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
         setMouseTracking(true);
@@ -64,7 +65,13 @@ public:
             } else {
                 QMessageBox::critical(nullptr, "Error", "Failed to save the image!");
             }
+        }
+    }
 
+    void chooseColor() {
+        QColor newColor = QColorDialog::getColor(m_currentColor, this, "Choose Drawing Color");
+        if (newColor.isValid()) {
+            m_currentColor = newColor;
         }
     }
 
@@ -87,7 +94,7 @@ protected:
         QPoint currentPos = mapToPixmap(event->pos());
 
         QPainter painter(m_image.get());
-        painter.setPen(QPen(Qt::red, 5));
+        painter.setPen(QPen(m_currentColor, 5));
         painter.drawLine(m_lastPos, currentPos);
         m_lastPos = currentPos;
         updateImageDisplay();
@@ -103,6 +110,7 @@ private:
     std::unique_ptr<QImage> m_image = std::make_unique<QImage>();
     bool m_isDrawing = false;
     QPoint m_lastPos;
+    QColor m_currentColor;
 
     void updateImageDisplay() {
         if (m_image->isNull()) {
@@ -135,7 +143,6 @@ private:
 
     [[nodiscard]] QPoint mapToPixmap(const QPoint &pos) const {
         if (m_image->isNull()) return {0, 0};
-
 
         const auto offsetX = (size().width() - pixmap().width()) / 2;
         const auto offsetY = (size().height() - pixmap().height()) / 2;
