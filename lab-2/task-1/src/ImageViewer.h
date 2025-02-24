@@ -6,6 +6,7 @@
 #include <QImageReader>
 #include <QImage>
 #include <QStandardPaths>
+#include <QPainter>
 
 class ImageViewer final : public QLabel {
 public:
@@ -49,7 +50,31 @@ private:
             pixmap = pixmap.scaled(windowSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
-        setPixmap(pixmap);
+        if (m_image->hasAlphaChannel()) {
+            QPixmap checkerboardPixmap(pixmap.size());
+
+            QPainter painter(&checkerboardPixmap);
+            drawCheckerboard(painter, pixmap.size());
+            painter.end();
+
+            QPainter finalPainter(&checkerboardPixmap);
+            finalPainter.drawPixmap(0, 0, pixmap);
+            finalPainter.end();
+
+            setPixmap(checkerboardPixmap);
+        } else {
+            setPixmap(pixmap);
+        }
+    }
+
+    static void drawCheckerboard(QPainter &painter, const QSize &size) {
+        constexpr int tileSize = 20;
+        for (int y = 0; y < size.height(); y += tileSize) {
+            for (int x = 0; x < size.width(); x += tileSize) {
+                QRect rect(x, y, tileSize, tileSize);
+                painter.fillRect(rect, (x / tileSize + y / tileSize) % 2 ? Qt::lightGray : Qt::white);
+            }
+        }
     }
 };
 
